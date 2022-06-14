@@ -1,0 +1,138 @@
+body{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    font-family: "IBM Plex Sans", sans-serif;
+}
+
+.container{
+  display: flex;
+  width:95%;
+  font-size: 14px;
+}
+
+.navbar {
+  overflow: hidden;
+  background-color: #1b3056;
+}
+
+.navbar:nth-of-type(even){
+  background-color: #243e6e;
+}
+
+.navbar a {
+  float: left;
+  font-size: 18px;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+.dropdown {
+  float: left;
+  overflow: hidden;
+}
+
+.dropdown .dropbtn {
+  font-size: 20px;  
+  border: none;
+  outline: none;
+  color: white;
+  padding: 14px 16px;
+  background-color: inherit;
+  font-family: inherit;
+  margin: 0;
+}
+
+.navbar a:hover, .dropdown:hover .dropbtn {
+  background-color: rgba(190, 190, 190, 0.399);
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  float: none;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.slidecontainer, .slidecontainer1, .slidecontainer2, .slidecontainer3, .slidecontainer4, .slidecontainer5, .slidecontainer6 {
+    width: 50%;
+    padding-left: 2%;
+    padding-right: 2%;
+  }
+  
+  .slider {
+    -webkit-appearance: none;
+    height: 5px;
+    width: 100%;
+    border-radius: 5px;
+    background: #d3d3d3;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+  }
+
+  .slider:hover {
+    opacity: 1;
+  }
+  
+  .slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: #284377;
+    cursor: pointer;
+  }
+  
+  .slider::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #284377;
+    cursor: pointer;
+  }
+
+#header, h2{
+    text-decoration: none;
+    color:#284377;
+}
+
+.myCanvas{
+    width: 70%;
+    margin: 1%;
+}
+
+nav{
+    display: flex;
+    align-items: center;
+    justify-content:space-evenly;
+    width: 100%;
+}
+
+h3{
+  color: rgb(201, 2, 2);
+}
