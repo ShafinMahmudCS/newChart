@@ -3,8 +3,6 @@ function ERFC(value1){
   return 1-math.erf(value1);
 }
 
-alert("Under development");
-
 var C0 = 25;
 
 var q = 0.2;
@@ -119,30 +117,35 @@ slider[0].oninput = function() {
   chart1.destroy();
 
   //initial conditions (without sorption)
-  C0 = slider[0].value;
-  q = slider[1].value;
+  C0 = parseFloat(slider[0].value);
+  q = parseFloat(slider[1].value);
   alpha = 1;
+
   var n = 0.35;
-  var v = q/n;
+  var v = q / n;
+  var R = parseFloat(slider[4].value);
+  var vR = v / R;
   var Dstar = parseFloat(slider[2].value);
-  var D =  Dstar + (alpha*v);
-  var time = slider[3].value;
-  var distance = 80;
+  var D = Dstar + (alpha * v);
+  var DR = D / R;
+  time = parseFloat(slider[3].value);
+  var lambda = parseFloat(slider[5].value);
 
     output[0].innerHTML = slider[0].value + " mg/L";
 
     const xValues = [0, 1, 5, 10, 15, 20, 30, 40, 50, 80, 100, 120, 150, 180, 200, 250, 300, 350, 500];
 
     var xyValues = [];
-
+  
+    console.log(Math.exp(-Math.log10(2)/lambda*time));
     for(let i =0; i<xValues.length; i++){
       var obj = {};
       obj.x = xValues[i];
-      var C = (C0/2)*(ERFC((xValues[i]-v*time)/(2*Math.sqrt(D*time)))+(Math.exp(v*xValues[i]/D)*(ERFC((xValues[i]+v*time)/(2*Math.sqrt(D*time))))));
+      var C = (C0/2)*(ERFC((xValues[i]-vR*time)/(2*Math.sqrt(DR*time)))-(Math.exp(vR*xValues[i]/DR)*(ERFC((xValues[i]+vR*time)/(2*Math.sqrt(DR*time))))))*(Math.exp(-(Math.log(2)/lambda*time)));
       obj.y = C.toFixed(2);
       xyValues.push(obj);
     }
-
+  
     chart1 = new Chart(ctx1,{
       type: 'scatter',
       data: {
@@ -212,30 +215,35 @@ slider[0].oninput = function() {
     chart1.destroy();
   
     //initial conditions (without sorption)
-    C0 = slider[0].value;
-    q = slider[1].value;
+    C0 = parseFloat(slider[0].value);
+    q = parseFloat(slider[1].value);
     alpha = 1;
-    var n = 0.35;
-    var v = q/n;
-    var Dstar = parseFloat(slider[2].value);
-    var D =  Dstar + (alpha*v);
-    var time = slider[3].value;
-    var distance = 80;
   
-      output[1].innerHTML = slider[1].value + " m/day, velocity = " + v.toFixed(2) + " m/day";
+    var n = 0.35;
+    var v = q / n;
+    var R = parseFloat(slider[4].value);
+    var vR = v / R;
+    var Dstar = parseFloat(slider[2].value);
+    var D = Dstar + (alpha * v);
+    var DR = D / R;
+    time = parseFloat(slider[3].value);
+    var lambda = parseFloat(slider[5].value);
+  
+      output[1].innerHTML = slider[1].value + " mg/L";
   
       const xValues = [0, 1, 5, 10, 15, 20, 30, 40, 50, 80, 100, 120, 150, 180, 200, 250, 300, 350, 500];
   
       var xyValues = [];
-  
+    
+      console.log(Math.exp(-Math.log10(2)/lambda*time));
       for(let i =0; i<xValues.length; i++){
         var obj = {};
         obj.x = xValues[i];
-        var C = (C0/2)*(ERFC((xValues[i]-v*time)/(2*Math.sqrt(D*time)))+(Math.exp(v*xValues[i]/D)*(ERFC((xValues[i]+v*time)/(2*Math.sqrt(D*time))))));
+        var C = (C0/2)*(ERFC((xValues[i]-vR*time)/(2*Math.sqrt(DR*time)))-(Math.exp(vR*xValues[i]/DR)*(ERFC((xValues[i]+vR*time)/(2*Math.sqrt(DR*time))))))*(Math.exp(-(Math.log(2)/lambda*time)));
         obj.y = C.toFixed(2);
         xyValues.push(obj);
       }
-  
+    
       chart1 = new Chart(ctx1,{
         type: 'scatter',
         data: {
@@ -245,6 +253,7 @@ slider[0].oninput = function() {
             borderWidth:1.2,
             pointRadius:2.5,
             pointBackgroundColor: '#4775c9',
+            // data: [25.00, 24.98, 24.89, 24.66, 24.25, 23.58, 21.23, 17.41, 12.60, 1.82, 0.20, 0.01, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00],
             data: xyValues,
             fill: false,
             showLine: true
@@ -298,36 +307,42 @@ slider[0].oninput = function() {
         }
       });
     }
+  
 
     slider[2].oninput = function() {
  
       chart1.destroy();
     
       //initial conditions (without sorption)
-      C0 = slider[0].value;
-      q = slider[1].value;
+      C0 = parseFloat(slider[0].value);
+      q = parseFloat(slider[1].value);
       alpha = 1;
+    
       var n = 0.35;
-      var v = q/n;
+      var v = q / n;
+      var R = parseFloat(slider[4].value);
+      var vR = v / R;
       var Dstar = parseFloat(slider[2].value);
-      var D =  Dstar + (alpha*v);
-      var time = slider[3].value;
-      var distance = 80;
+      var D = Dstar + (alpha * v);
+      var DR = D / R;
+      time = parseFloat(slider[3].value);
+      var lambda = parseFloat(slider[5].value);
     
         output[2].innerHTML = slider[2].value;
     
         const xValues = [0, 1, 5, 10, 15, 20, 30, 40, 50, 80, 100, 120, 150, 180, 200, 250, 300, 350, 500];
     
         var xyValues = [];
-    
+      
+        console.log(Math.exp(-Math.log10(2)/lambda*time));
         for(let i =0; i<xValues.length; i++){
           var obj = {};
           obj.x = xValues[i];
-          var C = (C0/2)*(ERFC((xValues[i]-v*time)/(2*Math.sqrt(D*time)))+(Math.exp(v*xValues[i]/D)*(ERFC((xValues[i]+v*time)/(2*Math.sqrt(D*time))))));
+          var C = (C0/2)*(ERFC((xValues[i]-vR*time)/(2*Math.sqrt(DR*time)))-(Math.exp(vR*xValues[i]/DR)*(ERFC((xValues[i]+vR*time)/(2*Math.sqrt(DR*time))))))*(Math.exp(-(Math.log(2)/lambda*time)));
           obj.y = C.toFixed(2);
           xyValues.push(obj);
         }
-    
+      
         chart1 = new Chart(ctx1,{
           type: 'scatter',
           data: {
@@ -337,6 +352,7 @@ slider[0].oninput = function() {
               borderWidth:1.2,
               pointRadius:2.5,
               pointBackgroundColor: '#4775c9',
+              // data: [25.00, 24.98, 24.89, 24.66, 24.25, 23.58, 21.23, 17.41, 12.60, 1.82, 0.20, 0.01, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00],
               data: xyValues,
               fill: false,
               showLine: true
@@ -390,35 +406,41 @@ slider[0].oninput = function() {
           }
         });
       }
+    
       slider[3].oninput = function() {
  
         chart1.destroy();
       
         //initial conditions (without sorption)
-        C0 = slider[0].value;
-        q = slider[1].value;
+        C0 = parseFloat(slider[0].value);
+        q = parseFloat(slider[1].value);
         alpha = 1;
-        var n = 0.35;
-        var v = q/n;
-        var Dstar = parseFloat(slider[2].value);
-        var D =  Dstar + (alpha*v);
-        var time = slider[3].value;
-        var distance = 80;
       
-          output[3].innerHTML = slider[3].value + " day";
+        var n = 0.35;
+        var v = q / n;
+        var R = parseFloat(slider[4].value);
+        var vR = v / R;
+        var Dstar = parseFloat(slider[2].value);
+        var D = Dstar + (alpha * v);
+        var DR = D / R;
+        time = parseFloat(slider[3].value);
+        var lambda = parseFloat(slider[5].value);
+      
+          output[3].innerHTML = slider[3].value;
       
           const xValues = [0, 1, 5, 10, 15, 20, 30, 40, 50, 80, 100, 120, 150, 180, 200, 250, 300, 350, 500];
       
           var xyValues = [];
-      
+        
+          console.log(Math.exp(-Math.log10(2)/lambda*time));
           for(let i =0; i<xValues.length; i++){
             var obj = {};
             obj.x = xValues[i];
-            var C = (C0/2)*(ERFC((xValues[i]-v*time)/(2*Math.sqrt(D*time)))+(Math.exp(v*xValues[i]/D)*(ERFC((xValues[i]+v*time)/(2*Math.sqrt(D*time))))));
+            var C = (C0/2)*(ERFC((xValues[i]-vR*time)/(2*Math.sqrt(DR*time)))-(Math.exp(vR*xValues[i]/DR)*(ERFC((xValues[i]+vR*time)/(2*Math.sqrt(DR*time))))))*(Math.exp(-(Math.log(2)/lambda*time)));
             obj.y = C.toFixed(2);
             xyValues.push(obj);
           }
-      
+        
           chart1 = new Chart(ctx1,{
             type: 'scatter',
             data: {
@@ -428,6 +450,7 @@ slider[0].oninput = function() {
                 borderWidth:1.2,
                 pointRadius:2.5,
                 pointBackgroundColor: '#4775c9',
+                // data: [25.00, 24.98, 24.89, 24.66, 24.25, 23.58, 21.23, 17.41, 12.60, 1.82, 0.20, 0.01, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00],
                 data: xyValues,
                 fill: false,
                 showLine: true
@@ -481,4 +504,201 @@ slider[0].oninput = function() {
             }
           });
         }
+
+        slider[4].oninput = function() {
+ 
+          chart1.destroy();
+        
+          //initial conditions (without sorption)
+          C0 = parseFloat(slider[0].value);
+          q = parseFloat(slider[1].value);
+          alpha = 1;
+        
+          var n = 0.35;
+          var v = q / n;
+          var R = parseFloat(slider[4].value);
+          var vR = v / R;
+          var Dstar = parseFloat(slider[2].value);
+          var D = Dstar + (alpha * v);
+          var DR = D / R;
+          time = parseFloat(slider[3].value);
+          var lambda = parseFloat(slider[5].value);
+        
+            output[4].innerHTML = slider[4].value;
+        
+            const xValues = [0, 1, 5, 10, 15, 20, 30, 40, 50, 80, 100, 120, 150, 180, 200, 250, 300, 350, 500];
+        
+            var xyValues = [];
+          
+            console.log(Math.exp(-Math.log10(2)/lambda*time));
+            for(let i =0; i<xValues.length; i++){
+              var obj = {};
+              obj.x = xValues[i];
+              var C = (C0/2)*(ERFC((xValues[i]-vR*time)/(2*Math.sqrt(DR*time)))-(Math.exp(vR*xValues[i]/DR)*(ERFC((xValues[i]+vR*time)/(2*Math.sqrt(DR*time))))))*(Math.exp(-(Math.log(2)/lambda*time)));
+              obj.y = C.toFixed(2);
+              xyValues.push(obj);
+            }
+          
+            chart1 = new Chart(ctx1,{
+              type: 'scatter',
+              data: {
+                datasets: [{
+                  backgroundColor: '#4775c9',
+                  borderColor: '#4775c9',
+                  borderWidth:1.2,
+                  pointRadius:2.5,
+                  pointBackgroundColor: '#4775c9',
+                  // data: [25.00, 24.98, 24.89, 24.66, 24.25, 23.58, 21.23, 17.41, 12.60, 1.82, 0.20, 0.01, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00],
+                  data: xyValues,
+                  fill: false,
+                  showLine: true
+                }]
+              },
+              options: {
+                responsive: true,
+                title: {
+                  display: true,
+                  text: "Concentration with Distance (Time = 115 days)",
+                  fontSize: 20
+                },
+                animation: false,
+                legend:{
+                    display:false
+                },
+                tooltips: {
+                  mode: 'label',
+                },
+                hover: {
+                  mode: 'nearest',
+                  intersect: true
+                },
+                scales: {
+                  xAxes: [{
+                    display: true,
+                    scaleLabel: {
+                      display: true,
+                      labelString: 'Distance',
+                      fontSize: 17
+                    },
+                      ticks: {min: 0, max:600, fontSize: 13.5}
+                }],
+                  yAxes: [{
+                    display: true,
+                    precision: 0.00,
+                    scaleLabel: {
+                      display: true,
+                      labelString: 'Concentration',
+                      fontSize: 17
+                    },
+                    ticks: {
+                      min: 0,
+                       max:30,
+                       fontSize: 13.5,
+                       callback: function(value, index, values) {
+                        return value + ".00";
+                    }}
+                  }]
+                }
+              }
+            });
+          }
+
+          slider[5].oninput = function() {
+ 
+            chart1.destroy();
+          
+            //initial conditions (without sorption)
+            C0 = parseFloat(slider[0].value);
+            q = parseFloat(slider[1].value);
+            alpha = 1;
+          
+            var n = 0.35;
+            var v = q / n;
+            var R = parseFloat(slider[4].value);
+            var vR = v / R;
+            var Dstar = parseFloat(slider[2].value);
+            var D = Dstar + (alpha * v);
+            var DR = D / R;
+            time = parseFloat(slider[3].value);
+            var lambda = parseFloat(slider[5].value);
+          
+              output[5].innerHTML = slider[5].value;
+          
+              const xValues = [0, 1, 5, 10, 15, 20, 30, 40, 50, 80, 100, 120, 150, 180, 200, 250, 300, 350, 500];
+          
+              var xyValues = [];
+            
+              console.log(Math.exp(-Math.log10(2)/lambda*time));
+              for(let i =0; i<xValues.length; i++){
+                var obj = {};
+                obj.x = xValues[i];
+                var C = (C0/2)*(ERFC((xValues[i]-vR*time)/(2*Math.sqrt(DR*time)))-(Math.exp(vR*xValues[i]/DR)*(ERFC((xValues[i]+vR*time)/(2*Math.sqrt(DR*time))))))*(Math.exp(-(Math.log(2)/lambda*time)));
+                obj.y = C.toFixed(2);
+                xyValues.push(obj);
+              }
+            
+              chart1 = new Chart(ctx1,{
+                type: 'scatter',
+                data: {
+                  datasets: [{
+                    backgroundColor: '#4775c9',
+                    borderColor: '#4775c9',
+                    borderWidth:1.2,
+                    pointRadius:2.5,
+                    pointBackgroundColor: '#4775c9',
+                    // data: [25.00, 24.98, 24.89, 24.66, 24.25, 23.58, 21.23, 17.41, 12.60, 1.82, 0.20, 0.01, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00],
+                    data: xyValues,
+                    fill: false,
+                    showLine: true
+                  }]
+                },
+                options: {
+                  responsive: true,
+                  title: {
+                    display: true,
+                    text: "Concentration with Distance (Time = 115 days)",
+                    fontSize: 20
+                  },
+                  animation: false,
+                  legend:{
+                      display:false
+                  },
+                  tooltips: {
+                    mode: 'label',
+                  },
+                  hover: {
+                    mode: 'nearest',
+                    intersect: true
+                  },
+                  scales: {
+                    xAxes: [{
+                      display: true,
+                      scaleLabel: {
+                        display: true,
+                        labelString: 'Distance',
+                        fontSize: 17
+                      },
+                        ticks: {min: 0, max:600, fontSize: 13.5}
+                  }],
+                    yAxes: [{
+                      display: true,
+                      precision: 0.00,
+                      scaleLabel: {
+                        display: true,
+                        labelString: 'Concentration',
+                        fontSize: 17
+                      },
+                      ticks: {
+                        min: 0,
+                         max:30,
+                         fontSize: 13.5,
+                         callback: function(value, index, values) {
+                          return value + ".00";
+                      }}
+                    }]
+                  }
+                }
+              });
+            }          
+      
   $("#canvas1").load(" #canvas1");
