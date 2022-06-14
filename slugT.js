@@ -54,7 +54,7 @@ for(let i =0; i<tValues.length; i++){
       responsive: true,
       title: {
         display: true,
-        text: "Concentration with Distance (Time = 115 days)",
+        text: "Concentration with Time (Distance = 100 m)",
         fontSize: 20
       },
       animation: false,
